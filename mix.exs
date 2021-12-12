@@ -7,7 +7,7 @@ defmodule DoctorSchedule.MixProject do
     [
       app: :doctor_schedule,
       version: "0.1.0",
-      elixir: "~> 1.12",
+      elixir: "~> 1.13",
       description: "Medical Appointment Scheduling Project",
       source_utl: @github_url,
       homepage_url: @github_url,
@@ -76,7 +76,9 @@ defmodule DoctorSchedule.MixProject do
       {:plug_cowboy, "~> 2.5"},
       {:credo, "~> 1.6", only: [:dev, :test], runtime: false},
       {:sobelow, "~> 0.11.1", only: :dev},
-      {:excoveralls, "~> 0.14.4", only: :test}
+      {:excoveralls, "~> 0.14.4", only: :test},
+      {:ex_machina, "~> 2.7"},
+      {:faker, "~> 0.17", only: :test}
     ]
   end
 
