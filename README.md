@@ -1,4 +1,6 @@
-# DoctorSchedule
+# DoctorSchedule [![Build Actions Status](https://github.com/adrianomota/doctor_schedule/workflows/elixir/badge.svg)](https://github.com/adrianomota/doctor_schedule/actions) [![codecov](https://codecov.io/gh/adrianomota/doctor_schedule/branch/main/graph/badge.svg?token=mRPaIzO3gj)](https://codecov.io/gh/adrianomota/doctor_schedule)
+
+
 
 To start your Phoenix server:
 

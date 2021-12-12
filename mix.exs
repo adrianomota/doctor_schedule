@@ -1,16 +1,41 @@
 defmodule DoctorSchedule.MixProject do
   use Mix.Project
 
+  @github_url "https://github.com/adrianomota/doctor_schedule.git"
+
   def project do
     [
       app: :doctor_schedule,
       version: "0.1.0",
       elixir: "~> 1.12",
+      description: "Medical Appointment Scheduling Project",
+      source_utl: @github_url,
+      homepage_url: @github_url,
+      files: ~w(mix.exs lib LICENSE.md README.md CHANGELOG.md),
+      package: [
+        maintainers: ["Adriano de Lima Araujo Mota"],
+        license: ["MIT"],
+        links: %{
+          "github" => @github_url
+        }
+      ],
+      docs: [
+        main: "readme",
+        extras: ["readme.md", "CHANGELOG.md"]
+      ],
       elixirc_paths: elixirc_paths(Mix.env()),
-      compilers: [:gettext] ++ Mix.compilers(),
+      compilers: [:phoenix, :gettext] ++ Mix.compilers(),
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
-      deps: deps()
+      deps: deps(),
+      test_coverage: [tool: ExCoveralls],
+      preferred_cli_env: [
+        coveralls: :test,
+        "coveralls.detail": :test,
+        "coveralls.post": :test,
+        "coveralls.json": :test,
+        "coveralls.html": :test
+      ]
     ]
   end
 
@@ -48,7 +73,10 @@ defmodule DoctorSchedule.MixProject do
       {:telemetry_poller, "~> 1.0"},
       {:gettext, "~> 0.18"},
       {:jason, "~> 1.2"},
-      {:plug_cowboy, "~> 2.5"}
+      {:plug_cowboy, "~> 2.5"},
+      {:credo, "~> 1.6", only: [:dev, :test], runtime: false},
+      {:sobelow, "~> 0.11.1", only: :dev},
+      {:excoveralls, "~> 0.14.4", only: :test}
     ]
   end
 
@@ -64,7 +92,12 @@ defmodule DoctorSchedule.MixProject do
       "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
       "ecto.reset": ["ecto.drop", "ecto.setup"],
       test: ["ecto.create --quiet", "ecto.migrate --quiet", "test"],
-      "assets.deploy": ["esbuild default --minify", "phx.digest"]
+      "assets.deploy": ["esbuild default --minify", "phx.digest"],
+      "assets.deploy": [
+        "cmd --cd assets npm run deploy",
+        "esbuild default --minify",
+        "phx.digest"
+      ]
     ]
   end
 end
