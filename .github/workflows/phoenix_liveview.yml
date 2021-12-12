@@ -7,8 +7,8 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-env:
-  GUARDIAN_SECRET_KEY: ${{ secrets.GUARDIAN_SECRET_KEY }}
+# env:
+#   GUARDIAN_SECRET_KEY: ${{ secrets.GUARDIAN_SECRET_KEY }}
 
 jobs:
   lint:
@@ -18,7 +18,7 @@ jobs:
       - uses: erlef/setup-elixir@885971a72ed1f9240973bd92ab57af8c1aa68f24
         with:
           otp-version: "24.0"
-          elixir-version: "1.12"
+          elixir-version: "1.13"
       - uses: actions/cache@v2
         env:
           cache-name: cache-elixir-deps
