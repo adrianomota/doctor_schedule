@@ -74,6 +74,7 @@ defmodule DoctorSchedule.MixProject do
       {:gettext, "~> 0.18"},
       {:jason, "~> 1.2"},
       {:plug_cowboy, "~> 2.5"},
+      {:bcrypt_elixir, "~> 2.3"},
       {:credo, "~> 1.6", only: [:dev, :test], runtime: false},
       {:sobelow, "~> 0.11.1", only: :dev},
       {:excoveralls, "~> 0.14.4", only: :test},
