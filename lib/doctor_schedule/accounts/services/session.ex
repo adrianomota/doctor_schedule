@@ -7,7 +7,7 @@ defmodule DoctorSchedule.Accounts.Services.Session do
     if verify_user(user, password) do
       {:ok, user}
     else
-      {:error}
+      {:error, :unauthorized}
     end
   rescue
     _ ->

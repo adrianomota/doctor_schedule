@@ -25,7 +25,7 @@ defmodule DoctorSchedule.Services.SessionTest do
     end
 
     test "authenticate/2 with invalid password", %{user: user} do
-      assert {:error} = Session.authenticate(%{email: user.email}, "123456789")
+      assert {:error, :unauthorized} = Session.authenticate(%{email: user.email}, "123456789")
     end
 
     test "authenticate/2 with invalid user" do
