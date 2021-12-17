@@ -5,8 +5,8 @@ defmodule DoctorSchedule.Services.SessionTest do
 
   alias DoctorSchedule.{
     Accounts,
-    Accounts.Services.Session,
-    Accounts.Entities.User
+    Accounts.Entities.User,
+    Accounts.Services.Session
   }
 
   describe "Session" do
