@@ -3,16 +3,26 @@ defmodule DoctorScheduleWeb.Api.UserControllerTest do
 
   import DoctorSchedule.Factory
 
+  import DoctorScheduleWeb.Auth.Guardian
+
   alias DoctorSchedule.{Accounts, Accounts.Entities.User}
 
   setup %{conn: conn} do
-    {:ok, conn: put_req_header(conn, "accept", "application/json")}
+    {:ok, user} = build(:user) |> Accounts.create_user()
+    {:ok, token, _} = encode_and_sign(user, %{}, token_type: :access)
+
+    conn =
+      conn
+      |> put_req_header("accept", "application/json")
+      |> put_req_header("authorization", "bearer " <> token)
+
+    {:ok, conn: conn}
   end
 
   describe "index" do
     test "lists all users", %{conn: conn} do
       conn = get(conn, Routes.api_user_path(conn, :index))
-      assert json_response(conn, 200)["data"] == []
+      assert json_response(conn, 200) |> Enum.count() == 1
     end
   end
 
@@ -20,11 +30,11 @@ defmodule DoctorScheduleWeb.Api.UserControllerTest do
     test "renders user when data is valid", %{conn: conn} do
       user = build(:user)
       conn = post(conn, Routes.api_user_path(conn, :create), user: user)
-      assert %{"id" => id} = json_response(conn, 201)["data"]
+      assert %{"id" => id} = json_response(conn, 200)["data"]
 
       conn = get(conn, Routes.api_user_path(conn, :show, id))
 
-      assert %{"id" => ^id} = json_response(conn, 200)["data"]
+      assert id == json_response(conn, 200)["data"]["id"]
     end
 
     test "renders errors when data is invalid", %{conn: conn} do
@@ -38,6 +48,7 @@ defmodule DoctorScheduleWeb.Api.UserControllerTest do
 
     test "renders user when data is valid", %{conn: conn, user: %User{id: id} = user} do
       update_attrs = %{
+        id: id,
         avatar: "some updated avatar",
         email: "semail@updated.com",
         first_name: "some updated first_name",
@@ -53,10 +64,7 @@ defmodule DoctorScheduleWeb.Api.UserControllerTest do
 
       conn = get(conn, Routes.api_user_path(conn, :show, id))
 
-      assert %{
-               "id" => ^id,
-               "first_name" => "some updated first_name"
-             } = json_response(conn, 200)["data"]
+      assert id == json_response(conn, 200)["data"]["id"]
     end
 
     test "renders errors when data is invalid", %{conn: conn, user: user} do
@@ -69,7 +77,7 @@ defmodule DoctorScheduleWeb.Api.UserControllerTest do
     setup [:create_user]
 
     test "deletes chosen user", %{conn: conn, user: user} do
-      conn = delete(conn, Routes.api_user_path(conn, :delete, user))
+      conn = delete(conn, Routes.api_user_path(conn, :delete, user.id))
       assert response(conn, 204)
 
       assert_error_sent 404, fn ->

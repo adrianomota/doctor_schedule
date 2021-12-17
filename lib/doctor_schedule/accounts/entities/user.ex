@@ -52,7 +52,5 @@ defmodule DoctorSchedule.Accounts.Entities.User do
     |> put_change(:password_hash, Bcrypt.hash_pwd_salt(password))
   end
 
-  defp hash_password(changeset) do
-    changeset
-  end
+  defp hash_password(changeset), do: changeset
 end

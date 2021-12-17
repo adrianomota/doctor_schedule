@@ -79,7 +79,8 @@ defmodule DoctorSchedule.MixProject do
       {:sobelow, "~> 0.11.1", only: :dev},
       {:excoveralls, "~> 0.14.4", only: :test},
       {:ex_machina, "~> 2.7"},
-      {:faker, "~> 0.17", only: :test}
+      {:faker, "~> 0.17", only: :test},
+      {:guardian, "~> 2.2"}
     ]
   end
 

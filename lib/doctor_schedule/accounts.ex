@@ -38,6 +38,22 @@ defmodule DoctorSchedule.Accounts do
   def get_user!(id), do: Repo.get!(User, id)
 
   @doc """
+  Gets a single user.
+
+  Raises `Ecto.NoResultsError` if the User does not exist.
+
+  ## Examples
+
+      iex> get_by!(%{email: "some@email"})
+      %User{}
+
+      iex> get_by!(%{email: "not_found@email"})
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_by!(params), do: Repo.get_by!(User, params)
+
+  @doc """
   Creates a user.
 
   ## Examples

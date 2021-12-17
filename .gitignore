@@ -32,3 +32,6 @@ doctor_schedule-*.tar
 npm-debug.log
 /assets/node_modules/
 
+.env
+
+compose.env
